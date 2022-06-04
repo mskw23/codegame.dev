@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { motion } from "framer-motion";
 
+import "animate.css";
+
 type LayoutComponentProps = {
   children: ReactNode;
 };
