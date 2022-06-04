@@ -1,8 +1,28 @@
 import * as React from "react";
 import { AcademicCapIcon, CheckCircleIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
+import { FaReact } from "react-icons/fa";
+import { SiJavascript } from "react-icons/si";
+import Link from "next/link";
 
-const paths = [{ name: "JavaScript" }, { name: "React" }];
+const paths = [
+  {
+    id: "javascript",
+    name: "JavaScript",
+    icon: <SiJavascript className="mr-4" />,
+  },
+  { id: "react", name: "React", icon: <FaReact className="mr-4" /> },
+  {
+    id: "mixed",
+    name: "Mixed",
+    icon: (
+      <div className="flex items-center mr-4">
+        <SiJavascript className="mr-2" />
+        <FaReact />
+      </div>
+    ),
+  },
+];
 
 export function MainComponent() {
   const [selected, setSelected] = React.useState(paths[0]);
@@ -42,7 +62,10 @@ export function MainComponent() {
                                 ? "text-white font-semibold"
                                 : "text-gray-900"
                             }`}>
-                            {path.name}
+                            <div className="flex items-center">
+                              {path.icon}
+                              {path.name}
+                            </div>
                           </RadioGroup.Label>
                         </div>
                       </div>
@@ -60,9 +83,11 @@ export function MainComponent() {
         </RadioGroup>
       </div>
 
-      <button className="bg-primary rounded px-8 py-2 text-background font-semibold transition-shadow hover:drop-shadow-lg">
-        Start
-      </button>
+      <Link href={`/learn/${selected.id}`}>
+        <a className="bg-primary rounded px-8 py-2 text-background font-semibold transition-shadow hover:drop-shadow-lg">
+          Start
+        </a>
+      </Link>
     </main>
   );
 }
