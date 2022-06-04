@@ -38,3 +38,15 @@ body {
   color: var(--white);
   font-family: "Poppins", georgia, serif;
 }
+
+.code-tag:after {
+  content: attr(data-number);
+  position: absolute;
+  right: -28px;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  background-color: var(--primary);
+}

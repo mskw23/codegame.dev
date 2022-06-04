@@ -31,21 +31,20 @@ export const CodeComponent = ({
 
   const handleVerify = () => {
     if (equals(correct, result)) {
-      makeShot(1, {});
+      makeShot(0.25);
+      makeShot(0.75);
       setEnded(true);
     } else {
       // TODO: handle incorrect
     }
   };
 
-  const makeShot = useCallback((particleRatio: number, opts: any) => {
+  const makeShot = useCallback((x: number) => {
     refConfetti.current &&
       refConfetti.current({
-        ...opts,
         colors: ["#e9c46a", "#f4a261", "#e76f51"],
-
-        origin: { y: 1.1, x: 0.25 },
-        particleCount: Math.floor(200 * particleRatio),
+        origin: { y: 1.2, x },
+        particleCount: 200,
       });
   }, []);
 
@@ -62,20 +61,23 @@ export const CodeComponent = ({
             language="javascript"
             wrapLines
             wrapLongLines
+            sty
+            // style={{ overflowX: "inherit" }}
             lineProps={(lineNumber) => {
               const isValid = correct.includes(lineNumber);
+              const isChecked = result.includes(lineNumber);
               return {
-                class: clsx("block", {
+                "data-number": `${result.indexOf(lineNumber) + 1}`,
+                class: clsx("block relative", {
                   "hover:bg-primary cursor-pointer": isValid,
-                  "bg-primary bg-opacity-50": result.includes(lineNumber),
+                  "bg-primary bg-opacity-50 code-tag": isChecked,
                 }),
                 onClick: isValid
                   ? () => handleLineClick(lineNumber)
                   : undefined,
               };
             }}
-            CodeTag={({ children }) => <div>{children}</div>}
-            customStyle={{ borderRadius: 8 }}>
+            customStyle={{ borderRadius: 8, overflowX: "inherit" }}>
             {code}
           </SyntaxHighlighter>
         </div>
@@ -99,9 +101,11 @@ export const CodeComponent = ({
             </button>
           </div>
         )}
-        <div className="h-12 flex justify-center items-center">
-          <p>{result.map((value) => value)}</p>
-        </div>
+        {!ended && (
+          <div className="h-12 flex justify-center items-center">
+            <p>{result.map((value) => value)}</p>
+          </div>
+        )}
       </main>
       <ReactCanvasConfetti
         style={{
