@@ -15,6 +15,7 @@ export const CodeComponent = ({
   correct,
   onCorrect,
 }: CodeComponentProps) => {
+  const [ended, setEnded] = useState(false);
   const [result, setResult] = useState<number[]>([]);
   const refConfetti = useRef<confetti.CreateTypes | null>(null);
   const handleLineClick = (lineNumber: number) => {
@@ -31,7 +32,7 @@ export const CodeComponent = ({
   const handleVerify = () => {
     if (equals(correct, result)) {
       makeShot(1, {});
-      setTimeout(() => onCorrect(), 1000);
+      setEnded(true);
     } else {
       // TODO: handle incorrect
     }
@@ -78,11 +79,26 @@ export const CodeComponent = ({
             {code}
           </SyntaxHighlighter>
         </div>
-        <button
-          onClick={handleVerify}
-          className="bg-accent hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3">
-          Verify
-        </button>
+        {ended ? (
+          <button
+            onClick={onCorrect}
+            className="bg-accent text-white font-bold py-2 px-4 rounded mt-3">
+            Next
+          </button>
+        ) : (
+          <div className="flex">
+            <button
+              onClick={handleVerify}
+              className="bg-accent text-white font-bold py-2 px-4 rounded mt-3">
+              Verify
+            </button>
+            <button
+              onClick={onCorrect}
+              className="text-white font-bold py-2 px-4 rounded mt-3">
+              Skip
+            </button>
+          </div>
+        )}
         <div className="h-12 flex justify-center items-center">
           <p>{result.map((value) => value)}</p>
         </div>

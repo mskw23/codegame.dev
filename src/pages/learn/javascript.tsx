@@ -17,7 +17,6 @@ const LearnJavascript: NextPage = () => {
   const reloadData = async () => {
     const data = await fetch("/api/code");
     const d = await data.json();
-    console.log(d);
     setQuestion(d);
   };
   return (
