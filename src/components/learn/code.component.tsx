@@ -115,9 +115,10 @@ export const CodeComponent = ({
                   "hover:bg-primary cursor-pointer": isValid,
                   "bg-primary bg-opacity-50 code-tag": isChecked,
                 }),
-                onClick: isValid
-                  ? () => handleLineClick(lineNumber)
-                  : undefined,
+                onClick:
+                  isValid && !ended
+                    ? () => handleLineClick(lineNumber)
+                    : undefined,
               };
             }}
             customStyle={{ borderRadius: 8, overflowX: "inherit" }}>
