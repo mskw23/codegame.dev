@@ -41,7 +41,7 @@ export const CodeComponent = ({
       makeShot(0.25);
       makeShot(0.75);
       setEnded(true);
-    } else {
+    } else if (!isError) {
       setIsError(true);
       setTimeout(() => {
         setIsError(false);

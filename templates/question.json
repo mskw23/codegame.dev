@@ -1,0 +1,4 @@
+{
+  "code": "console.log('1');",
+  "correct": [1]
+}
