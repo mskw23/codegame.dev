@@ -1,7 +1,6 @@
 {
   "id": "0cb5772d-a20b-4f20-84a1-8ac7a1dc2786",
   "code": "console.log('1');",
-  "correct": [
-    1
-  ]
+  "didYouKnow": "lorem ipsum",
+  "correct": [1]
 }

@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     <Layout>
       <Header />
       <main className="flex h-screen">
-        <div className="basis-full my-24 mr-16">
+        <div className="sm:block hidden basis-full my-24 mr-16">
           <div className="bg-accent w-full h-full" />
         </div>
         <Navigation className="basis-full flex justify-center" />

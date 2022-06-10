@@ -9,6 +9,9 @@
   --secondary: #f4a261;
   --tetiary: #e76f51;
   --white: #ffffff;
+  --toastify-color-light: var(--primary);
+  --toastify-toast-background: red;
+  /* --toastify-toast-width */
 }
 
 @font-face {
@@ -49,4 +52,8 @@ body {
   height: 20px;
   text-align: center;
   background-color: var(--primary);
+}
+
+.Toastify__toast {
+  border-radius: 0;
 }

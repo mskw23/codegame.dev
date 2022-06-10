@@ -3,23 +3,31 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import ReactCanvasConfetti from "react-canvas-confetti";
 import { equals } from "ramda";
 import clsx from "clsx";
+import { Question } from "../../utils/types";
+import { Button } from "../button";
+import { CodeBlock } from "../codeBlock";
 
-interface CodeComponentProps {
-  code: string;
-  correct: number[];
+interface CodeComponentProps extends Question {
+  onNext(): void;
   onCorrect(): void;
+  onClear(): void;
 }
 
 export const CodeComponent = ({
   code,
   correct,
+  onNext,
   onCorrect,
+  onClear,
 }: CodeComponentProps) => {
   const [ended, setEnded] = useState(false);
   const [isError, setIsError] = useState(false);
   const [result, setResult] = useState<number[]>([]);
   const refConfetti = useRef<confetti.CreateTypes | null>(null);
   const handleLineClick = (lineNumber: number) => {
+    if (ended) {
+      return;
+    }
     setResult((res) => {
       const arr = [...res];
       if (arr.includes(lineNumber)) {
@@ -29,6 +37,12 @@ export const CodeComponent = ({
       }
     });
   };
+
+  useEffect(() => {
+    if (ended) {
+      onCorrect();
+    }
+  }, [ended]);
 
   useEffect(() => {
     if (isError) {
@@ -62,7 +76,8 @@ export const CodeComponent = ({
     refConfetti.current = instance;
   }, []);
 
-  const onClear = () => {
+  const handleClear = () => {
+    onClear();
     setEnded(false);
     setResult([]);
   };
@@ -94,18 +109,28 @@ export const CodeComponent = ({
     <>
       <main className="flex flex-col items-center min-h-screen justify-center">
         <div className="max-w-2xl">
-          <button
-            onClick={onHint}
-            className="bg-primary text-background text-white font-bold py-2 px-4 rounded mb-3">
-            Hint
-          </button>
-          <SyntaxHighlighter
+          <div className="h-12">
+            {!ended ? (
+              <Button
+                text="Hint"
+                variant="primary"
+                className="mb-3"
+                onClick={onHint}
+              />
+            ) : null}
+          </div>
+          <CodeBlock
+            code={code}
+            correct={correct}
+            result={result}
+            onLinePress={handleLineClick}
+          />
+          {/* <SyntaxHighlighter
             showLineNumbers
             language="javascript"
             wrapLines
             wrapLongLines
             sty
-            // style={{ overflowX: "inherit" }}
             lineProps={(lineNumber) => {
               const isValid = correct.includes(lineNumber);
               const isChecked = result.includes(lineNumber);
@@ -123,42 +148,47 @@ export const CodeComponent = ({
             }}
             customStyle={{ borderRadius: 8, overflowX: "inherit" }}>
             {code}
-          </SyntaxHighlighter>
+          </SyntaxHighlighter> */}
         </div>
         {ended ? (
           <div className="flex">
-            <button
-              onClick={onCorrect}
-              className="bg-accent text-white font-bold py-2 px-4 rounded mt-3">
-              Next
-            </button>
-            <button
-              onClick={onClear}
-              className="text-white font-bold py-2 px-4 rounded mt-3">
-              Clear
-            </button>
+            <Button
+              text="Next"
+              variant="secondary"
+              className="mt-3"
+              onClick={onNext}
+            />
+            <Button
+              text="Clear"
+              variant="ghost"
+              className="mt-3"
+              onClick={handleClear}
+            />
           </div>
         ) : (
           <div
             className={clsx("flex", {
               "animate__animated animate__shakeX": isError,
             })}>
-            <button
+            <Button
+              text="Verify"
+              variant="secondary"
+              className="mt-3"
               onClick={handleVerify}
-              className="bg-accent text-white font-bold py-2 px-4 rounded mt-3">
-              Verify
-            </button>
-            <button
-              onClick={onCorrect}
-              className="text-white font-bold py-2 px-4 rounded mt-3">
-              Skip
-            </button>
+            />
+            <Button
+              text="Skip"
+              variant="ghost"
+              className="mt-3"
+              onClick={onNext}
+            />
           </div>
         )}
         <div className="h-12 flex justify-center items-center">
           {isError && <p>Try once again 💩</p>}
         </div>
       </main>
+
       <ReactCanvasConfetti
         style={{
           position: "fixed",
