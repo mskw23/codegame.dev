@@ -4,3 +4,9 @@ export type Question = {
   didYouKnow: string;
   correct: number[];
 };
+
+export type Path = {
+  id: string;
+  name: string;
+  icon: JSX.Element;
+};

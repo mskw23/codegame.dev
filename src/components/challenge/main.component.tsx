@@ -10,7 +10,7 @@ export function MainComponent() {
       <h1 className="text-4xl my-10">Learn</h1>
       <PathPicker selected={selected} onSelect={setSelected} />
 
-      <Link href={`/learn/${selected.id}`}>
+      <Link href={`/challenge/${selected.id}`}>
         <a className="bg-primary rounded px-8 py-2 text-background font-semibold transition-shadow hover:drop-shadow-lg">
           Start
         </a>
