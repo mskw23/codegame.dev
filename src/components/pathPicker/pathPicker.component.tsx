@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { AcademicCapIcon, CheckCircleIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
 import { paths } from "../../utils/config";

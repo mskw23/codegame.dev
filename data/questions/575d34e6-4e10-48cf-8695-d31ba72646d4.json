@@ -1,0 +1,6 @@
+{
+  "id": "575d34e6-4e10-48cf-8695-d31ba72646d4",
+  "code": "function multiplyBy2(num) {\n    return num * 2;\n  }\n  \n  function outer() {\n    let counter = 0;\n    function increment() {\n      if(counter > 1) {\n        counter = 0\n      } else {\n        counter++;\n      }\n    }\n    function getCounter() {\n      return counter;\n    }\n    return {\n      increment,\n      getCounter,\n    };\n  }\n  \n  const myObject = outer();\n  \n  myObject.increment();\n  myObject.increment();\n  myObject.increment();\n  const result = multiplyBy2(myObject.getCounter());\n  ",
+  "didYouKnow": "lorem ipsum",
+  "correct": [23, 6, 11, 26, 9, 15, 2]
+}

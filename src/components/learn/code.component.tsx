@@ -83,31 +83,33 @@ export const CodeComponent = ({
   };
 
   const onHint = () => {
-    setResult((r) => {
-      let isCorrect = true;
-      if (r.length === 0) {
-        isCorrect = false;
-      } else {
-        r.forEach((e, i) => {
-          if (correct[i] !== e) {
-            isCorrect = false;
-          }
-        });
-      }
-      if (isCorrect) {
-        const clear = [...r];
-        const nextIndex = clear.length;
-        clear.push(correct[nextIndex]);
-        return clear;
-      } else {
-        return [correct[0]];
-      }
-    });
+    if (result.length < correct.length) {
+      setResult((r) => {
+        let isCorrect = true;
+        if (r.length === 0) {
+          isCorrect = false;
+        } else {
+          r.forEach((e, i) => {
+            if (correct[i] !== e) {
+              isCorrect = false;
+            }
+          });
+        }
+        if (isCorrect) {
+          const clear = [...r];
+          const nextIndex = clear.length;
+          clear.push(correct[nextIndex]);
+          return clear;
+        } else {
+          return [correct[0]];
+        }
+      });
+    }
   };
 
   return (
     <>
-      <main className="flex flex-col items-center min-h-screen justify-center">
+      <div className="flex flex-col items-center pt-24 pb-24 justify-center">
         <div className="max-w-2xl">
           <div className="h-12">
             {!ended ? (
@@ -125,30 +127,6 @@ export const CodeComponent = ({
             result={result}
             onLinePress={handleLineClick}
           />
-          {/* <SyntaxHighlighter
-            showLineNumbers
-            language="javascript"
-            wrapLines
-            wrapLongLines
-            sty
-            lineProps={(lineNumber) => {
-              const isValid = correct.includes(lineNumber);
-              const isChecked = result.includes(lineNumber);
-              return {
-                "data-number": `${result.indexOf(lineNumber) + 1}`,
-                class: clsx("block relative", {
-                  "hover:bg-primary cursor-pointer": isValid,
-                  "bg-primary bg-opacity-50 code-tag": isChecked,
-                }),
-                onClick:
-                  isValid && !ended
-                    ? () => handleLineClick(lineNumber)
-                    : undefined,
-              };
-            }}
-            customStyle={{ borderRadius: 8, overflowX: "inherit" }}>
-            {code}
-          </SyntaxHighlighter> */}
         </div>
         {ended ? (
           <div className="flex">
@@ -187,7 +165,7 @@ export const CodeComponent = ({
         <div className="h-12 flex justify-center items-center">
           {isError && <p>Try once again 💩</p>}
         </div>
-      </main>
+      </div>
 
       <ReactCanvasConfetti
         style={{

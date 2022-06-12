@@ -40,7 +40,6 @@ export function LayoutComponent({ children }: LayoutComponentProps) {
         className="opacity-0 bg-background"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        // exit={"hidden"}
         transition={{
           delay: ANIM_DURATION + ANIM_DURATION * 0.2 + ANIM_DURATION * 0.4,
           type: "spring",

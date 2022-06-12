@@ -1,11 +1,13 @@
+import clsx from "clsx";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 export function HeadingComponent({
   children,
+  className,
   ...props
 }: DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>) {
   return (
-    <h1 className="text-3xl font-semibold mb-2" {...props}>
+    <h1 className={clsx("text-3xl font-semibold mb-6", className)} {...props}>
       {children}
     </h1>
   );

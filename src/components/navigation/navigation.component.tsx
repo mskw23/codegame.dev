@@ -11,11 +11,11 @@ const LINKS = [
 export function NavigationComponent({ className, ...props }: any) {
   return (
     <nav
-      className={`flex flex-col sm:items-start items-center ${className}`}
+      className={`flex flex-col md:items-start items-center ${className}`}
       {...props}>
       {LINKS.map(({ to, label }) => (
         <Link key={to} href={to}>
-          <a className="text-5xl font-semibold uppercase mb-8 hover:text-primary">
+          <a className="sm:text-5xl text-4xl font-semibold uppercase mb-8 hover:text-primary">
             {label}
           </a>
         </Link>

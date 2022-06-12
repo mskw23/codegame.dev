@@ -19,10 +19,46 @@ const handleAnswers = ({ username, path }) => {
     );
   }
   const id = `${uuid.v4()}`;
-  const question = { id, ...questionTemplate };
-  fs.writeJSONSync(nodePath.join(__dirname, `../data/${id}.json`), question, {
-    spaces: 2,
-  });
+  const question = {
+    id,
+    ...questionTemplate,
+    code: `function multiplyBy2(num) {
+    return num * 2;
+  }
+  
+  function outer() {
+    let counter = 0;
+    function increment() {
+      if(counter > 1) {
+        counter = 0
+      } else {
+        counter++;
+      }
+    }
+    function getCounter() {
+      return counter;
+    }
+    return {
+      increment,
+      getCounter,
+    };
+  }
+  
+  const myObject = outer();
+  
+  myObject.increment();
+  myObject.increment();
+  myObject.increment();
+  const result = multiplyBy2(myObject.getCounter());
+  `,
+  };
+  fs.writeJSONSync(
+    nodePath.join(__dirname, `../data/questions/${id}.json`),
+    question,
+    {
+      spaces: 2,
+    }
+  );
   indices[path].push(id);
   fs.writeJSONSync(nodePath.join(__dirname, `../data/indices.json`), indices, {
     spaces: 2,

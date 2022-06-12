@@ -16,6 +16,9 @@ export function LearnComponent({ path }: LearnComponentProps) {
 
   useEffect(() => {
     fetchIndices();
+    return () => {
+      handleClear();
+    };
   }, []);
 
   useEffect(() => {
@@ -28,7 +31,6 @@ export function LearnComponent({ path }: LearnComponentProps) {
     setIndices(null);
     const data = await fetch(`/api/indices${path ? "?path=" + path : ""}`);
     const indices = (await data.json()).indices;
-    console.log(indices);
     setIndices(indices);
   };
 
@@ -56,7 +58,7 @@ export function LearnComponent({ path }: LearnComponentProps) {
   };
 
   return (
-    <>
+    <div className="max-h-screen overflow-auto">
       {question ? (
         <LearnCode
           {...question}
@@ -69,6 +71,6 @@ export function LearnComponent({ path }: LearnComponentProps) {
           <Loader />
         </div>
       )}
-    </>
+    </div>
   );
 }
